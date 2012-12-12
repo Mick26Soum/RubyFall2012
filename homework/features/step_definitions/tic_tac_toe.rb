@@ -1,23 +1,172 @@
 class TicTacToe
-  attr_accessor :board, :player, :player_symbol, :cpu_sign, :openSpots,  :player_move, :winsequence
+
+  #Note Reviewed the script on Jisaack Tutorial
+  #Stil unable to finish the code
+
+  #Renee's Code
+  #class TicTacToe
+   # SYMBOLS = [:X,:O]
+   #attr_accessor :player, :board
+
+   # def initialize(current_player=nil,player_sym=nil)
+   #setup_board
+   #  @current_player = current_player || [:computer, :player].sample
+   #  choose_player_symbol(player_sym)
+   #end
+
+   #def computer_symbol
+   #  @player_symbol[:computer]
+   #end
+
+   #def player_symbol
+   #  @player_symbol[:player]
+   #end
+
+   #def current_player
+   #  {:computer => "Computer",
+   #   :player => @player}[@current_player]
+   #end
+
+   #def welcome_player
+   #  "Welcome #{@player}"
+   #end
+
+   #def indicate_palyer_turn
+   #  puts "#{@player}'s Move:"
+   #end
+
+   #def get_player_move
+   #  gets.chomp
+   #end
+
+   #def player_move
+   #  move = get_player_move.to_sym
+   #  until open_spots.include?(move)
+   #    move = get_player_move.to_sym
+   #  end
+   #  @board[move] = player_symbol
+   #  @current_player = :computer
+   #  move
+   #end
+
+   #def computer_move
+   #  move = get_computer_move
+   #  @board[move] = computer_symbol
+   #  @current_player = :player
+   #  move
+   #end
+
+   #def get_computer_move
+   #  @board.select{|k,v| v.to_s.strip.empty?}.map{|k,v| k}.sample
+   #end
+
+   #def current_state
+   #  row1 = "#{@board[:A1]}|#{@board[:A2]}|#{@board[:A3]}\n"
+   #  row2 = "#{@board[:B1]}|#{@board[:B2]}|#{@board[:B3]}\n"
+   #  row3 = "#{@board[:C1]}|#{@board[:C2]}|#{@board[:C3]}\n"
+   #  row1 + "-"*row1.size+"\n"+
+   #      row2 + "-"*row2.size+"\n"+
+   #      row3 + "-"*row3.size+"\n"+
+   #      "******"
+   #end
+
+   #def determine_winner
+   #  p_spots = @board.select{|k,v| v==player_symbol}
+   #  c_spots = @board.select{|k,v| v==computer_symbol}
+
+   #  player_spots = p_spots.map{|k,v| {k[0].to_sym => k[1].to_i} }
+   #  computer_spots = c_spots.map{|k,v| {k[0].to_sym => k[1].to_i} }
+   #  @player_win = false
+   #  @computer_win = false
+   #  [:A, :B, :C].each do |l|
+   #    return if @player_win = player_spots.map{|i| i[l]}.reject{|f| f.nil?}.sort == [1,2,3]
+   #    return if @computer_win = computer_spots.map{|i| i[l]}.reject{|f| f.nil?}.sort == [1,2,3]
+   #  end
+
+   #  [1,2,3].each do |l|
+   #    return if @player_win = player_spots.map{|i| i.invert[l]}.reject{|f| f.nil?}.sort == [:A,:B,:C]
+   #    return if @computer_win = computer_spots.map{|i| i.invert[l]}.reject{|f| f.nil?}.sort == [:A,:B,:C]
+   #  end
+
+   #  return if @player_win = p_spots.keys.sort.reject{|r| ![:A1,:B2,:C3].include? r} == [:A1,:B2,:C3]
+   #  return if @player_win = p_spots.keys.sort.reject{|r| ![:A3,:B2,:C1].include? r} == [:A3,:B2,:C1]
+   #  return if @computer_win = c_spots.keys.sort.reject{|r| ![:A1,:B2,:C3].include? r} == [:A1,:B2,:C3]
+   #  return if @computer_win = c_spots.keys.sort.reject{|r| ![:A3,:B2,:C1].include? r} == [:A3,:B2,:C1]
+   #end
+
+   #def player_won?
+   #  !!@player_win
+   #end
+
+   #def computer_won?
+   #  !!@computer_win
+   #end
+
+   #def draw?
+   #  !player_won? && !computer_won?
+   #end
+
+   #def over?
+   #  player_won? || computer_won? || !spots_open?
+   #end
+
+   #def spots_open?
+   #  !open_spots.empty?
+   #end
+
+   #def open_spots
+   #  @board.select{|k,v| v.to_s.strip.empty?}.map{|k,v| k}
+   #end
+
+   #private
+   #def setup_board
+   #  @board = {:A1 => ' ', :A2 => ' ', :A3 => ' ',
+   #            :B1 => ' ', :B2 => ' ', :B3 => ' ',
+   #            :C1 => ' ', :C2 => ' ', :C3 => ' '}
+   #end
+
+   #def choose_player_symbol(player_sym=nil)
+   #  player_sym ||= SYMBOLS.sample
+   #  @player_symbol = {
+   #      :computer => SYMBOLS.reject{|s| s==player_sym}.first,
+   #      :player => player_sym
+   #  }
+   #end
+   #end
+
+
+
+
+
+  attr_accessor :places, :player, :player_sign, :cpu_sign, :openSpots,  :player_move, :win_sequences
   attr_reader :player
   SYMBOLS = [:X, :O]
 
+  #Refer to tic tac toe tutorial Jisaacks
+
   def initialize(first_player = " ", user_symbol = " ")
-    @board = {
+    # create empty hashes for X's and O's
+    @places = {
         :A1 => " " , :A2 => " ", :A3 => " ",
         :B1 => " ", :B2 => " ", :B3 => " ",
         :C1 => " ", :C2 => " ", :C3 => " "
     }
-    @winsequence = {
+
+    #3 vertical and column, 2 diagonal sequence
+    @win_sequences = {
         :A => [:A1,:A2,:A3], :B => [:B1,:B2,:B3], :C => [:C1,:C2,:C3],
         :D => [:A1,:B1,:C1], :E =>[:A2,:B2,:C2], :F => [:A3,:B3,:C3],
         :G=>[:C1, :B2, :A3], :H=>[:A1,:B2,:C3]}
 
     if (first_player != " ")
-      @player = first_player.to_s.capitalize
+      @player = first_player
     end
     symbol_select(user_symbol)
+  end
+
+  def welcome_player
+    order_select
+    "Welcome #{@player}"
   end
 
   def player=(name)
@@ -25,47 +174,23 @@ class TicTacToe
     if (@player == "Player")
       @player = name
     end
-    #name
   end
 
   def current_state
-    @board.values
+    @places.values
   end
 
-  def computer_move
-    randomSpot = random(@openSpots.count)
-    @board[@openSpots[randomSpot]] = @cpu_sign.to_s
-    @openSpots[randomSpot]
-  end
-
-  def determine_winner
-    player_plays = @board.reject {|k,v| v != @player_symbol}.keys
-    computer_plays = @board.reject {|k,v| v != @cpu_sign}.keys
-    @winsequence.each_value{|v|
-      if v.include?(player_plays)
-        player_won?
-      elsif v.include?(computer_plays)
-        computer_won?
-      else
-        draw?
-      end
-    }
-  end
-
-  def computer_won?
-    true
-    over?
-  end
-
-  def player_won?
-    true
-    over?
-  end
-
-  def spots_open?
+  def player_move
+    @player_move = get_player_move.to_sym
     open_spots
-    !(@openSpots.empty?)
+    if (@openSpots.include?(@player_move))
+      @places[@player_move] = @player_symbol.to_s
+    else
+      @player_move = get_player_move.to_sym
+    end
+    @player_move
   end
+
 
   def over?
     true
@@ -75,20 +200,10 @@ class TicTacToe
     true
   end
 
-  def player_move
-    @player_move = get_player_move.to_sym
-    open_spots
-    if (@openSpots.include?(@player_move))
-      @board[@player_move] = @player_symbol.to_s
-    else
-      @player_move = get_player_move.to_sym
-    end
-    @player_move
-  end
 
   def open_spots
-    #openSpots is an array of Symbols (keys of board hash)
-    @openSpots = @board.reject {|k,v| v != " "}.keys
+
+    @openSpots = @places.reject {|k,v| v != " "}.keys
   end
 
   def get_player_move
@@ -108,27 +223,14 @@ class TicTacToe
     end
   end
 
-  def symbol_select(user_symbol)
-    if user_symbol == " "
-      selectSymbol = random(2)
-      if selectSymbol.even?
-        @player_symbol = :X
-        @cpu_sign = :O
-      else
-        @player_symbol = :O
-        @cpu_sign = :X
-      end
-    else
-      @player_symbol = user_symbol
-      symbolLeft = SYMBOLS.delete_if {|x| x == user_symbol}
-      @cpu_sign = symbolLeft[0]
-    end
+  def select_symbol()
+
+   @cpu_sign = rand() > 0.5? 'X' : 'O'
+    @player_sign = @cpu == "X" ? 'O': 'S'
+
+
   end
 
-  def welcome_player
-    order_select
-    "Welcome #{@player}"
-  end
 
   def random(range)
     rand(range)
