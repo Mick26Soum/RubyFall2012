@@ -13,11 +13,11 @@ Then /^the computer welcomes me to the game with "(.*?)"$/ do |arg1|
 end
 
 Then /^randomly chooses who goes first$/ do
-  [@game.player, "Computer"].should include @game.current_player
+  [@game.player, "Computer"].should include @game.player
 end
 
 Then /^who is X and who is O$/ do
-  TicTacToe::SYMBOLS.should include @game.player_symbol, @game.computer_symbol
+  TicTacToe::SYMBOLS.should include @game.player_symbol, @game.cpu_sign
 end
 
 Given /^I have a started Tic\-Tac\-Toe game$/ do
@@ -26,7 +26,7 @@ Given /^I have a started Tic\-Tac\-Toe game$/ do
 end
 
 Given /^it is my turn$/ do
-  @game.current_player.should eq "Renee"
+  @game.player.should eq "Renee"
 end
 
 Given /^the computer knows my name is Renee$/ do
@@ -45,7 +45,7 @@ end
 
 Given /^it is the computer's turn$/ do
   @game = TicTacToe.new(:computer, :O)
-  @game.current_player.should eq "Computer"
+  @game.player.should eq "Computer"
 end
 
 Then /^the computer randomly chooses an open position for its move$/ do
@@ -55,7 +55,7 @@ Then /^the computer randomly chooses an open position for its move$/ do
 end
 
 Given /^the computer is playing X$/ do
-  @game.computer_symbol.should eq :X
+  @game.cpu_sign.should eq :X
 end
 
 Then /^the board should have an X on it$/ do
@@ -78,7 +78,7 @@ When /^"(.*?)" is not taken$/ do |arg1|
 end
 
 Then /^it is now the computer's turn$/ do
-  @game.current_player.should eq "Computer"
+  @game.player.should eq "Computer"
 end
 
 When /^there are three X's in a row$/ do

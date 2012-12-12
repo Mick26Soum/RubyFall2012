@@ -4,7 +4,7 @@ require './features/step_definitions/tic-tac-toe.rb'
 puts @game.welcome_player
 
 until @game.over?
-	case @game.player
+	case @game.current_player
 	when "Computer"
 		@game.computer_move
 	when @game.player
